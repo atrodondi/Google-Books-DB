@@ -11,7 +11,11 @@ function searchBar(props) {
           </h5>
           <p>{props.value}</p>
           <div className="form-group">
-            <input className="form-control" onChange={props.onChange} />
+            <input
+              className="form-control"
+              onChange={props.onChange}
+              value={props.value}
+            />
           </div>
 
           <button onClick={props.handleFormSubmit} className="btn btn-primary">
