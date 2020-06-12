@@ -31,3 +31,7 @@ Go to the [Deployed App](https://googlebookssearchmern.herokuapp.com/) and you c
 5. [Axios](https://www.npmjs.com/package/axios)
 6. [React-Bootstrap](https://www.npmjs.com/package/react-bootstrap)
 7. [Bootstrap](https://www.npmjs.com/package/bootstrap)
+
+# Questions? Developed and Maintained by:
+
+[ATR](https://github.com/atrodondi)
