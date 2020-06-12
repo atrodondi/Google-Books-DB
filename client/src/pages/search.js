@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Searchbar from "../components/searchBar/searchBar";
 import API from "../utils/API";
 import ResultsContainer from "../components/resultsContainer/resultsContainer";
+import Navbar from "../components/navbar/navbar";
+import Jumbotron from "../components/jumbotron/jumbotron";
 
 // i need to write the function to be passed down to the searchbar component that searchs the api and shit
 export default class SearchPage extends Component {
@@ -11,6 +13,8 @@ export default class SearchPage extends Component {
       searchQuery: "",
       searchResults: [],
       savedBooks: [],
+      navbarText: "GoogleBooks API",
+      navbarColor:"black"
     };
   }
 
@@ -107,12 +111,21 @@ export default class SearchPage extends Component {
         this.setState({ searchResults: newState });
       });
   };
-
+  // return to starter navbarText
+  startingNavText = () => {
+    
+    const timer = setTimeout(() => {
+      this.setState({ navbarText: "GoogleBooks API" , navbarColor:"black"});
+    }, 1000);
+    return () => clearTimeout(timer);
+  };
   //
   handleSaveClick = (event) => {
     let bookObj = event.target.value;
     let query = JSON.parse(bookObj);
     this.saveBook(query);
+    this.setState({ navbarText: "BOOK SAVED" , navbarColor:"green"});
+    this.startingNavText();
   };
 
   // rendering content
@@ -120,6 +133,10 @@ export default class SearchPage extends Component {
     // i need to write and pass an onlick function to this searchbar
     return (
       <div>
+        <Navbar navbarColor={this.state.navbarColor} navbarText={this.state.navbarText} />
+        <br />
+        <Jumbotron />
+        <br />
         <Searchbar
           value={this.state.searchQuery}
           onChange={this.handleInputChange}
