@@ -1,34 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import Navbar from "react-bootstrap/Navbar";
+import Nav from "react-bootstrap/Nav";
 
-function Navbar() {
+function navbar() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <Link to="/">Google Books API</Link>
-      <button
-        className="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span className="navbar-toggler-icon"></span>
-      </button>
-
-      <div className="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul className="navbar-nav mr-auto">
-          <li className="list-item btn  active m-1">
-            <Link to="/">Search</Link>
-          </li>
-          <li className="list-item btn  m-1">
-            <Link to="/saved">Saved</Link>
-          </li>
-        </ul>
-      </div>
-    </nav>
+    <Navbar bg="light" expand="lg">
+      <Navbar.Brand href="/">GoogleBooksAPI</Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="mr-auto">
+          <Nav.Link href="/">Search</Nav.Link>
+          <Nav.Link href="/saved">Saved</Nav.Link>
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
+    
   );
 }
 
-export default Navbar;
+export default navbar;
