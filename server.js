@@ -9,7 +9,7 @@ require("dotenv").config();
 // Define middleware here
 app.use(
   express.urlencoded({
-    extended: true,
+    extended: true
   })
 );
 app.use(express.json());
@@ -20,12 +20,12 @@ if (process.env.NODE_ENV === "production") {
 
 // Connect to the Mongo DB
 mongoose
-  .connect(process.env.MONGODB_URI || "mongodb://localhost/googlebooks", {
+  .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true
   })
   .then(console.log("connected to MongoDB successfully, full send baby!!"))
-  .catch((err) => {
+  .catch(err => {
     console.log(err);
   });
 
