@@ -10,6 +10,7 @@ export default class SearchPage extends Component {
     this.state = {
       searchQuery: "",
       searchResults: [],
+      savedBooks: [],
     };
   }
 
@@ -37,31 +38,84 @@ export default class SearchPage extends Component {
     API.searchBooks(query)
       .then((res) => {
         let results = res.data.items;
-        console.log("ITEMS RETURNED FROM API CALL", results);
         let booksArr = [];
         // create a proper object from the data then set the state to that obj array. then we can just render that array via mapping it to a component
+
+        // had to make a bunch of conditions because some of the API calls would have certain key values blank. maybe i will find a cleaner way to filter the bs out later
         results.forEach((result) => {
-          let book = {
-            title: result.volumeInfo.title,
-            authors: result.volumeInfo.authors
-              // prob not needed, but did it to look nicer?
-              .toString()
-              .split(",")
-              .join(", "),
-            description: result.volumeInfo.description,
-            image: result.volumeInfo.imageLinks.thumbnail,
-            link: result.volumeInfo.infoLink,
-            id: result.id
-          };
-          booksArr.push(book);
+          if (result.volumeInfo.imageLinks === undefined) {
+            let book = {
+              title: result.volumeInfo.title,
+              authors: result.volumeInfo.authors
+                // prob not needed, but did it to look nicer?
+                .toString()
+                .split(",")
+                .join(", "),
+              description: result.volumeInfo.description,
+              image: "no image avail",
+              link: result.volumeInfo.infoLink,
+              id: result.id,
+            };
+            booksArr.push(book);
+          } else if (result.volumeInfo.authors === undefined) {
+            let book = {
+              title: result.volumeInfo.title,
+              authors: "Author Not Available",
+
+              description: result.volumeInfo.description,
+              image: result.volumeInfo.imageLinks.thumbnail,
+              link: result.volumeInfo.infoLink,
+              id: result.id,
+            };
+            booksArr.push(book);
+          } else {
+            let book = {
+              title: result.volumeInfo.title,
+              authors: result.volumeInfo.authors,
+
+              description: result.volumeInfo.description,
+              image: result.volumeInfo.imageLinks.thumbnail,
+              link: result.volumeInfo.infoLink,
+              id: result.id,
+            };
+            booksArr.push(book);
+          }
         });
 
         this.setState({ searchResults: booksArr });
-        console.log("this.state.searchResults", this.state.searchResults);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
+  // save a book to the DB
+  saveBook = (query) => {
+    // code to make the DB call to save the book to the api
+    API.saveBook(query)
+      .then((res) => {
+        this.state.savedBooks.push(res.data);
+        let currentState = this.state.searchResults;
+        let newState = currentState.filter((book) => book.id !== res.data.id);
+        this.setState({ searchResults: newState });
+      })
+      .catch((err) => {
+        console.log(err);
+
+        let currentState = this.state.searchResults;
+        let newState = currentState.filter((book) => book.id !== query.id);
+        this.setState({ searchResults: newState });
+      });
+  };
+
+  //
+  handleSaveClick = (event) => {
+    let bookObj = event.target.value;
+    let query = JSON.parse(bookObj);
+    this.saveBook(query);
+  };
+
+  // rendering content
   render() {
     // i need to write and pass an onlick function to this searchbar
     return (
@@ -72,7 +126,11 @@ export default class SearchPage extends Component {
           handleFormSubmit={this.handleFormSubmit}
         ></Searchbar>
         <br />
-        <ResultsContainer searchResults={this.state.searchResults} />
+        <ResultsContainer
+          saveBook={this.saveBook}
+          searchResults={this.state.searchResults}
+          handleClickEvent={this.handleSaveClick}
+        />
       </div>
     );
   }

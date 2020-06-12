@@ -9,7 +9,6 @@ function searchBar(props) {
           <h5 className="card-title">
             Type in search parameters for a search of Google Books!
           </h5>
-          <p>{props.value}</p>
           <div className="form-group">
             <input
               className="form-control"

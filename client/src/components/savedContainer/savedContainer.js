@@ -1,24 +1,24 @@
 import React from "react";
 import { List, ListItem } from "../list/list";
 
-export default function resultsContainer(props) {
+export default function savedContainer(props) {
   return (
     <div className="card">
-      <div className="card-header">Search Results</div>
-      <div className="card-body" id="resultsContainer">
+      <div className="card-header">Saved Books</div>
+      <div className="card-body" id="savedContainer">
         <List>
-          {props.searchResults.map((book) => (
+          {props.savedBooks.map((book) => (
             <ListItem key={book.id}>
               <div className="card">
                 <div className="card-header">
                   <h3>{book.title}</h3>
-                  <h6 className="card-title">By: {book.authors}</h6>
+                  <h6 className="card-title">By: {book.author}</h6>
                   <button
-                    onClick={props.handleClickEvent}
                     className="btn btn-danger float-right ml-2"
-                    value={JSON.stringify(book)}
+                    onClick={props.handleDelete}
+                    id={book._id}
                   >
-                    Save Book
+                    Delete Book
                   </button>
                   <a
                     href={book.link}

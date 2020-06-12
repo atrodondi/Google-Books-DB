@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3500;
 const app = express();
 const routes = require("./routes");
 require("dotenv").config();
@@ -11,7 +11,7 @@ app.use(
   express.urlencoded({
     extended: true,
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   })
 );
 app.use(express.json());
@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === "production") {
 mongoose
   .connect(process.env.MONGODB_URI || "mongodb://localhost/googlebooks")
   .then(console.log("connected to MongoDB successfully, full send baby!!"))
-  .catch(err => {
+  .catch((err) => {
     console.log(err);
   });
 

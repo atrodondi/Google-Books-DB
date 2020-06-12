@@ -17,7 +17,7 @@ class App extends Component {
           <Jumbotron />
           <br />
           <Route path="/" exact component={searchPage} />
-        {/* <Route path="/saved" exact component={savedPage} /> */}
+        <Route path="/saved" exact component={savedPage} />
         </div>
       </Router>
     );
