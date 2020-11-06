@@ -5,7 +5,7 @@ import ResultsContainer from "../components/resultsContainer/resultsContainer";
 import Navbar from "../components/navbar/navbar";
 import Jumbotron from "../components/jumbotron/jumbotron";
 
-// i need to write the function to be passed down to the searchbar component that searchs the api and shit
+
 export default class SearchPage extends Component {
   constructor(props) {
     super(props);
@@ -36,8 +36,6 @@ export default class SearchPage extends Component {
 
   //   when the search button is clicked, this function handles the api call
   bookSearch = (query) => {
-    // // getting rid of spaces in query string and replacing with + for the api call
-    // let queryParsed = query.split(" ").join("+"); TURNS OUT IT WASNT NEEDED TO GET THE API CALL TO WORK
 
     API.searchBooks(query)
       .then((res) => {
@@ -45,7 +43,7 @@ export default class SearchPage extends Component {
         let booksArr = [];
         // create a proper object from the data then set the state to that obj array. then we can just render that array via mapping it to a component
 
-        // had to make a bunch of conditions because some of the API calls would have certain key values blank. maybe i will find a cleaner way to filter the bs out later
+        // had to make a bunch of conditions because some of the API calls would have certain key values blank. maybe i will find a cleaner way to filter the bs out later. ANY COMMENTS ON HOW TO CLEAN THIS UP WOULD BE APPRECIATED
         results.forEach((result) => {
           if (result.volumeInfo.imageLinks === undefined) {
             let book = {
@@ -111,7 +109,7 @@ export default class SearchPage extends Component {
         this.setState({ searchResults: newState });
       });
   };
-  // return to starter navbarText
+  // return to starter navbarText color
   startingNavText = () => {
     
     const timer = setTimeout(() => {
@@ -119,7 +117,8 @@ export default class SearchPage extends Component {
     }, 1000);
     return () => clearTimeout(timer);
   };
-  //
+
+  //handle saveClick event
   handleSaveClick = (event) => {
     let bookObj = event.target.value;
     let query = JSON.parse(bookObj);
@@ -130,7 +129,6 @@ export default class SearchPage extends Component {
 
   // rendering content
   render() {
-    // i need to write and pass an onlick function to this searchbar
     return (
       <div>
         <Navbar navbarColor={this.state.navbarColor} navbarText={this.state.navbarText} />
