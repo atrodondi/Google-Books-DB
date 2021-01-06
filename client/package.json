@@ -1,11 +1,11 @@
 {
-  "name": "mern",
+  "name": "Google Books",
   "version": "0.1.0",
-  "description": "Mern Demo",
+  "description": "Google Books API search",
   "private": true,
   "proxy": "http://localhost:3500/",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.5.0",
     "react": "^16.6.3",
     "react-bootstrap": "^1.0.1",
